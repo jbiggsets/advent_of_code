@@ -22,5 +22,5 @@ if __name__ == '__main__':
 
     # problem 2
     print('Problem 2 Solution: ')
-    print(sum([sum(all([(l in p) for p in grp]) for l in unique_letters)
+    print(sum([sum(all([l in p for p in grp]) for l in unique_letters)
                for grp in groups]), '\n')
