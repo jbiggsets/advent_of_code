@@ -46,8 +46,11 @@ class BagCounter:
             total += number * self._count(bag)
         return total
 
-    def count(self, root):
-        return self._count(root) - 1  # need to subtract 1
+    def count(self, root, include_root=False):
+        if include_root:
+            return self._count(root)
+        # subtract the root bag itself
+        return self._count(root) - 1
 
 
 if __name__ == '__main__':
