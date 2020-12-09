@@ -4,9 +4,15 @@ date :: 12-06-2020
 author :: Jeremy Biggs
 """
 
+import argparse
+
 if __name__ == '__main__':
 
-    with open('day6.txt') as fb:
+    parser = argparse.ArgumentParser(description='Advent of Code, Day 6')
+    parser.add_argument('input_file', help='input file')
+    args = parser.parse_args()
+
+    with open(args.input_file) as fb:
         lines = fb.read()
 
     # get the groups

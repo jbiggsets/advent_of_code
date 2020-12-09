@@ -4,8 +4,14 @@ date :: 12-04-2020
 author :: Jeremy Biggs
 """
 
+import argparse
 import re
 
+def _preprocess(filename):
+    with open(filename) as fb:
+        return [{i.split(':')[0]: i.split(':')[-1]
+                 for i in re.sub('\s', ' ', l).split(' ')}
+                for l in fb.read().split('\n\n')]
 
 class Passport:
     
@@ -49,15 +55,16 @@ class Passport:
 
 if __name__ == '__main__':
 
-    with open('day4.txt') as fb:
-        passports = [{i.split(':')[0]: i.split(':')[-1]
-                      for i in re.sub('\s', ' ', l).split(' ')}
-                     for l in fb.read().split('\n\n')]
+    parser = argparse.ArgumentParser(description='Advent of Code, Day 4')
+    parser.add_argument('input_file', help='input file')
+    args = parser.parse_args()
+
+    data = _preprocess(args.input_file)
 
     # problem 1
     print('Problem 1 Solution: ')
-    print(sum(Passport(p).validate() for p in passports), '\n')
+    print(sum(Passport(p).validate() for p in data), '\n')
 
     # problem 2
     print('Problem 2 Solution: ')
-    print(sum(Passport(p).validate(True) for p in passports), '\n')
+    print(sum(Passport(p).validate(True) for p in data), '\n')

@@ -4,8 +4,13 @@ date :: 12-08-2020
 author :: Jeremy Biggs
 """
 
+import argparse
 from copy import deepcopy
 
+
+def _preprocess(filename):
+    with open(filename) as fb:
+        return [i.split() for i in fb.read().strip().split('\n')]
 
 class GameConsole:
     
@@ -65,13 +70,16 @@ def fix_instructions_get_val(inst):
 
 if __name__ == '__main__':
 
-    with open('day8.txt') as fb:
-        inst = [i.split() for i in fb.read().strip().split('\n')]
+    parser = argparse.ArgumentParser(description='Advent of Code, Day 8')
+    parser.add_argument('input_file', help='input file')
+    args = parser.parse_args()
+
+    data = _preprocess(args.input_file)
 
     # problem 1
     print('Problem 1 Solution: ')
-    print(GameConsole(inst).execute().val, '\n')
+    print(GameConsole(data).execute().val, '\n')
 
     # problem 2
     print('Problem 2 Solution: ')
-    print(fix_instructions_get_val(inst), '\n')
+    print(fix_instructions_get_val(data), '\n')

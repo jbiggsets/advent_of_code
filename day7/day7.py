@@ -4,12 +4,16 @@ date :: 12-07-2020
 author :: Jeremy Biggs
 """
 
+import argparse
 import re
 
 REGEX = '([0-9]+)\s(.*)'
 
 
-def normalize_input(bags):
+def _preprocess(filename):
+    with open(filename) as fb:
+        bags = fb.readlines()
+
     bags = [b.strip()\
              .replace('.', '')\
              .replace('bags', 'bag')\
@@ -55,14 +59,16 @@ class BagCounter:
 
 if __name__ == '__main__':
 
-    with open('day7.txt') as fb:
-        bags = fb.readlines()
-        bags = normalize_input(bags)
+    parser = argparse.ArgumentParser(description='Advent of Code, Day 7')
+    parser.add_argument('input_file', help='input file')
+    args = parser.parse_args()
+
+    data = _preprocess(args.input_file)
 
     # problem 1
     print('Problem 1 Solution: ')
-    print(len(BagSearcher(bags).search('shiny gold bag')), '\n')
+    print(len(BagSearcher(data).search('shiny gold bag')), '\n')
 
     # problem 2
     print('Problem 2 Solution: ')
-    print(BagCounter(bags).count('shiny gold bag'), '\n')
+    print(BagCounter(data).count('shiny gold bag'), '\n')
